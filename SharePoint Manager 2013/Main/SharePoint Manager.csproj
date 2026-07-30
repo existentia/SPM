@@ -137,6 +137,23 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <!-- Microsoft Edge (WebView2) for the browser tab. SE only: these are net462
+       assemblies and the 2013 configurations still target v4.0. WebView2Loader.dll is
+       the native x64 loader and must sit beside the executable. -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <Reference Include="Microsoft.Web.WebView2.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\Microsoft.Web.WebView2-1.0.4078.44\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\Microsoft.Web.WebView2-1.0.4078.44\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <None Include="..\..\Libraries\Microsoft.Web.WebView2-1.0.4078.44\win-x64\WebView2Loader.dll">
+      <Link>WebView2Loader.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\ChangedNodes.cs" />
     <Compile Include="Collections\IChangedNodes.cs" />

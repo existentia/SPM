@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Autofac;
+using System.Diagnostics;
 using System.Reflection;
 using System.IO;
 
@@ -76,14 +77,12 @@ namespace SPM2.Framework.IoC
                 if (IsExcluded(item))
                     continue;
 
-                list.Add(Assembly.LoadFile(item.FullName));
-		 
+                TryLoad(list, item);
 	        }
 
             foreach (var item in dir.GetFiles("*.exe"))
 	        {
-                list.Add(Assembly.LoadFile(item.FullName));
-		 
+                TryLoad(list, item);
 	        }
             //dir.GetFiles(
             //executionAssembly.CodeBase
@@ -95,6 +94,33 @@ namespace SPM2.Framework.IoC
 
             //Create a container
             return list;
+        }
+
+        /// <summary>
+        /// Loads a file as a managed assembly, skipping anything that is not one.
+        ///
+        /// This directory is scanned blindly for *.dll, but native dependencies live here
+        /// too - WebView2Loader.dll, for example. Assembly.LoadFile throws
+        /// BadImageFormatException for those, and because this runs from the
+        /// AutoLoadAssemblies constructor the exception used to escape all the way to
+        /// Program.Main, which swallowed it and exited silently with no window and no
+        /// event log entry.
+        /// </summary>
+        private static void TryLoad(List<Assembly> list, FileInfo file)
+        {
+            try
+            {
+                list.Add(Assembly.LoadFile(file.FullName));
+            }
+            catch (BadImageFormatException)
+            {
+                // Native DLL, or built for a different architecture. Not our concern.
+                Trace.WriteLine("Skipped non-managed file: " + file.Name);
+            }
+            catch (FileLoadException ex)
+            {
+                Trace.WriteLine("Could not load assembly " + file.Name + ": " + ex.Message);
+            }
         }
 
         private bool IsExcluded(FileInfo file)
