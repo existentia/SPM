@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug SE</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DF0F93DA-B4F1-4AF7-B802-AC389103B605}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SPM2.ClassGenerator</RootNamespace>
+    <AssemblyName>SPM2.ClassGenerator</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <!-- Conditions key on $(Configuration) alone: this project is built directly rather
+       than through a solution, so $(Platform) may arrive as "Any CPU" or "AnyCPU". -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug SE'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug SE\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SPSE</DefineConstants>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release SE'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release SE\</OutputPath>
+    <DefineConstants>TRACE;SPSE</DefineConstants>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- Private=False: the SSOM binds from the GAC on a SharePoint server. -->
+  <ItemGroup>
+    <Reference Include="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.ServerRuntime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NodeDescriptorCollection.cs" />
+    <Compile Include="Genereator.cs" />
+    <Compile Include="NodeBuilder.cs" />
+    <Compile Include="NodeDescriptor.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReplacementParameters.cs" />
+    <Compile Include="TypesCollection.cs" />
+  </ItemGroup>
+  <!-- Private=True: this is a standalone console exe, so it needs SPM2.Framework and
+       SPM2.SharePoint beside it. They are strong-named but not in the GAC. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\SPM2.Framework\SPM2.Framework.csproj">
+      <Project>{5DE0D29F-DE15-4E15-9E89-3A873D849C40}</Project>
+      <Name>SPM2.Framework</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\SPM2.SharePoint\SPM2.SharePoint2010.csproj">
+      <Project>{CE144460-64CE-4FB5-A25E-25B7BB028D16}</Project>
+      <Name>SPM2.SharePoint2010</Name>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CustomNode.template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GeneratedNode.template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

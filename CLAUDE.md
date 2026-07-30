@@ -9,22 +9,38 @@ plain WinExe that references the SSOM assemblies.
 
 ## Architecture (important)
 - `Libraries/SPM2.Framework` — core framework, reflection helpers, base infra.
-- `Libraries/SPM2.SharePoint` — project name `SPM2.SharePoint2010.csproj`; base
-  node classes (SPNode<T>, SPNodeCollection<,>) that the model builds on.
-- `Libraries/SPM2.SharePoint2013` — the version-specific MODEL library. Nearly
-  empty of logic: it's just `Model/Generated/*.cs` (~95 auto-generated wrapper
-  "node" classes, one per SSOM type) + `Model/Custom/*.cs` (~95 hand-tuned
-  partial-class overrides) + `Icons.cs`. Nodes are discovered at runtime by
-  attributes: generated classes carry `[AdapterItemType("...")]`, custom classes
-  carry `[AttachTo]`/`[Title]`/`[Icon]`.
-- `SharePoint Manager 2010 v2/SPM2.ClassGenerator` — a console app that GENERATES
-  the model. It reflects over the live farm from `SPFarm.Local` and emits one
-  Generated and one Custom file per type, from `GeneratedNode.template` and
-  `CustomNode.template` (read from the working directory). It only writes a Custom
-  stub if one does not already exist, so hand-customizations are preserved across
-  regeneration.
+- `Libraries/SPM2.SharePoint` — project name `SPM2.SharePoint2010.csproj` (a legacy
+  filename; the assembly is `SPM2.SharePoint` and it is NOT 2010-specific). Holds
+  the base node classes (SPNode<T>, SPNodeCollection<,>) **and the bulk of the
+  model** — ~360 Generated + ~390 Custom node files.
+- `Libraries/SPM2.SharePoint2013` — version-DELTA model library: only the ~88 types
+  new in 2013. Namespace `SPM2.SharePoint2013.Model`.
+- `Libraries/SPM2.SharePointSE` — version-DELTA model library for types new in
+  Subscription Edition (currently certificate management). Namespace
+  `SPM2.SharePointSE.Model`.
+- Model libraries are just `Model/Generated/*.cs` (auto-generated wrapper "node"
+  classes, one per SSOM type) + `Model/Custom/*.cs` (hand-tuned partial-class
+  overrides) + `Icons.cs`. Nodes are discovered at runtime by attributes: generated
+  classes carry `[AdapterItemType("...")]`, custom classes carry
+  `[ExportToNode]`/`[Title]`/`[Icon]`/`[View]`. There is no `[AttachTo]` attribute —
+  `AttachTo` is only the name of the generator's template token.
+- `Tools/SPM2.ClassGenerator` — a console app that GENERATES the model. It reflects
+  over the live farm from `SPFarm.Local` and emits one Generated and one Custom file
+  per type into `cs/` and `custom/` under the working directory, from
+  `GeneratedNode.template` and `CustomNode.template` (also read from the working
+  directory). It never overwrites an existing Custom file. It emits everything into
+  the `SPM2.SharePoint.Model` namespace, so output for a delta library must be
+  re-namespaced by hand.
 - `SharePoint Manager 2013/Main` — the WinForms app (MainForm, tree explorer,
-  property grid, context-menu commands). References the 2013 model lib.
+  property grid, context-menu commands). The delta model assemblies are NOT
+  compile-time dependencies of the app's own code; they are discovered at runtime by
+  `AutoLoadAssemblies` scanning the exe directory, so they must be copied there.
+
+## Supported versions
+SharePoint 2013 / 2016 / 2019 / SE only. 2007 and 2010 support was removed, along
+with the `SharePoint Manager 2007`, `SharePoint Manager 2010` and
+`SharePoint Manager 2010 v2` trees and the `Debug/Release 2010` configurations.
+Build configurations are now `Debug|Release 2013` and `Debug|Release SE`.
 
 ## Uplift goal
 Produce a v16 model that works against SharePoint Server Subscription Edition.
@@ -41,8 +57,9 @@ The 2013 project uses `Version=15.0.0.0` from the `\15\ISAPI\` path.
 
 ## Guardrails
 - Do all work on a git branch; never commit to the original branch.
-- Keep the original `SharePoint Manager 2013` and `SPM2.SharePoint2013` projects
-  intact — they are the reference to diff and copy from.
+- Keep the `Debug|Release 2013` configurations intact — they are the reference to
+  diff against. Note they cannot be built on a box without the v15 ISAPI assemblies
+  and the .NET Framework 4.0 targeting pack.
 - The class generator only READS the farm (enumerates objects/properties) — safe
   to run. The SPM app itself CAN modify the farm via edit/save; do NOT drive any
   save/edit/delete actions against the farm. Building and launching is fine;

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug SE</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -22,26 +22,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>SPM2.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug 2010|AnyCPU' ">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug 2010\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <DefineConstants>
-    </DefineConstants>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release 2010\</OutputPath>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU'">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -100,20 +80,6 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
       <HintPath>..\..\..\..\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Search.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2010|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-    <Reference Include="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\14\ISAPI\Microsoft.SharePoint.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Common Files\microsoft shared\Web Server Extensions\14\ISAPI\Microsoft.SharePoint.Client.ServerRuntime.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.SharePoint.Search, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Common Files\microsoft shared\Web Server Extensions\14\ISAPI\Microsoft.SharePoint.Search.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU'">
@@ -985,10 +951,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MEF35\ComponentModel\MEF35.csproj" Condition="'$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-      <Project>{1BBA5101-D4F0-48B8-A5D6-7B23A099DCE3}</Project>
-      <Name>MEF35</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SPM2.Framework\SPM2.Framework.csproj">
       <Project>{5de0d29f-de15-4e15-9e89-3a873d849c40}</Project>
       <Name>SPM2.Framework</Name>
