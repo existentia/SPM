@@ -118,11 +118,15 @@ namespace Keutmann.SharePointManager.Forms
             // 
             // menuStrip
             // 
+            // languageToolStripMenuItem is deliberately not added: multi-language
+            // support is not wanted, and it rendered as a blank caption because
+            // InitializeInterfaceStrings overwrote the designer's "Language" text with
+            // a localization key that resolves to an empty string. The item and its
+            // handlers are left in place so the menu can be restored if that changes.
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.viewToolStripMenuItem,
-            this.languageToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
