@@ -133,6 +133,10 @@
       <Project>{48e7192b-2165-4561-b9b0-9a1bdb492893}</Project>
       <Name>SPM2.SharePoint2013</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\SPM2.SharePointSE\SPM2.SharePointSE.csproj">
+      <Project>{459c8a6c-ca0f-4a42-bd01-3c62bde01a96}</Project>
+      <Name>SPM2.SharePointSE</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
