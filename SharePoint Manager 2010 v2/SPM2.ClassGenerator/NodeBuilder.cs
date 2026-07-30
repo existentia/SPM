@@ -58,7 +58,8 @@ namespace SPM2.ClassGenerator
                 return;
             }
 
-            string dir = Path.GetDirectoryName(this.Filename);
+            // Fully qualified: this class has a string field named Path.
+            string dir = System.IO.Path.GetDirectoryName(this.Filename);
             if (!String.IsNullOrEmpty(dir) && !Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);

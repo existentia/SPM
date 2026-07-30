@@ -154,6 +154,7 @@
     <Compile Include="Library\SPMRegistry.cs" />
     <Compile Include="Library\SPMVersion.cs" />
     <Compile Include="Model\AdapterItemTypeAttribute.cs" />
+    <Compile Include="Model\SharedTypes.cs" />
     <Compile Include="Model\Custom\SPIisSettingsCollectionNode.cs" />
     <Compile Include="Model\Custom\SPListItemCollectionModel.cs" />
     <Compile Include="Model\Custom\SPViewFieldNode.cs" />

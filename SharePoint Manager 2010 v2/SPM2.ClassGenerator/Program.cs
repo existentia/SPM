@@ -15,7 +15,16 @@ namespace SPM2.ClassGenerator
 
 
             Console.WriteLine("Done!");
+#if SPSE
+            // Console.ReadKey throws when stdin is redirected, so only wait when the
+            // generator is actually being driven by a human at a console.
+            if (!Console.IsInputRedirected)
+            {
+                Console.ReadKey();
+            }
+#else
             Console.ReadKey();
+#endif
 
         }
     }
