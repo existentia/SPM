@@ -55,12 +55,6 @@ unlabelled/ugly in the tree after Phase 5.
 They're all v16; structure the model so one binary serves all three, detecting the farm
 build at startup. Useful for a mixed estate.
 
-### Out-of-process / remote architecture  — Large
-Keep an SSOM worker on .NET Framework on the server; build a modern front-end
-(.NET 8 WPF/Avalonia, or web) that talks to it. The only path to a modern UI **and** to
-running the console from a workstation instead of RDP. A project in its own right — park
-until the straight uplift is proven.
-
 ### High-DPI / dark mode / packaging  — Small–medium
 WinForms high-DPI fixes on 4.8, code-signed exe, GitHub Releases. Polish; do last.
 
