@@ -244,7 +244,10 @@ namespace SPM2.ClassGenerator
                 builder.Bind();
                 builder.Save();
 
+                // Custom partials hold hand-written customizations: only ever write a
+                // stub when none exists yet. Never overwrite.
                 builder = new NodeBuilder(this.CustomNodeTemplate, "custom", param);
+                builder.PreserveExisting = true;
                 builder.Bind();
                 builder.Save();
             }

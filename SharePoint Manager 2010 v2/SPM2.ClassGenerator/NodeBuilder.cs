@@ -40,18 +40,31 @@ namespace SPM2.ClassGenerator
             
         }
 
+        /// <summary>
+        /// When true, an existing file is never overwritten. Used for the Custom
+        /// partials, which carry hand-written customizations.
+        /// </summary>
+        public bool PreserveExisting = false;
+
         public void Save()
         {
-            try
+            // Historically this was an unconditional WriteAllText wrapped in an empty
+            // catch. Under TFS the Custom files were read-only, so the write failed
+            // silently and customizations survived by accident. Under git nothing is
+            // read-only, so that same code would destroy every hand-tuned Custom file.
+            if (this.PreserveExisting && File.Exists(this.Filename))
             {
+                Console.WriteLine("Skipped (exists): " + this.Filename);
+                return;
+            }
 
-                File.WriteAllText(this.Filename, this.Contents);
-            }
-            catch 
+            string dir = Path.GetDirectoryName(this.Filename);
+            if (!String.IsNullOrEmpty(dir) && !Directory.Exists(dir))
             {
-                
-                
+                Directory.CreateDirectory(dir);
             }
+
+            File.WriteAllText(this.Filename, this.Contents);
         }
     }
 }

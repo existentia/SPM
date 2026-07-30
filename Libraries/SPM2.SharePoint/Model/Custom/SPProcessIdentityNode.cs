@@ -1,4 +1,4 @@
-/* ---------------------------
+﻿/* ---------------------------
  * SharePoint Manager 2010 v2
  * Created by Carsten Keutmann
  * ---------------------------
@@ -24,7 +24,6 @@ namespace SPM2.SharePoint.Model
 	[ExportToNode("SPM2.SharePoint.Model.LauncherServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.LoadBalancerServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPAdministrationServiceNode")]
-	[ExportToNode("SPM2.SharePoint.Model.WebAnalyticsServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPTimerServiceNode")]
 	public partial class SPProcessIdentityNode
 	{
