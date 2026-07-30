@@ -23,7 +23,7 @@ From real examples (`SPFeatureNode`, `SPFileNode`, `SPDistributedCacheServiceNod
 [Title("SPFeature")]                    // static label, OR:
 [Title(PropertyName="Name")]            // read the label from this SSOM property
 [Icon(Small="BULLET.GIF")]              // SharePoint image filename (see Icons below)
-[View(100)]                             // sort weight among siblings in the tree
+[View(100)]                             // visibility threshold, NOT a sort order
 [ExportToNode("SPM2.SharePoint.Model.SPFeatureCollectionNode")]  // attach under this parent
 public partial class SPFeatureNode { ... }
 ```
@@ -49,7 +49,16 @@ public partial class SPFeatureNode { ... }
   If property Y is renamed in v16, update the string.
 - **`[Icon(Small=...)]`**: `"BULLET.GIF"` is treated as "no custom icon" by the base class.
   Default SharePoint layouts images resolve via `SharePointContext.GetImagePath(...)`.
-- **`[View(n)]`**: lower = higher in the sibling list.
+- **`[View(n)]`** is a **visibility threshold, not a sort order** — siblings are sorted by
+  `Text`. `ViewRule` (the only thing that reads it) shows a node when
+  `NodeProvider.ViewLevel >= n`. The View menu sets that level: Minimal = 10,
+  **Medium = 50 (the default)**, Full = 100.
+
+  So `View(100)` means "Full view only" — the generator's default, and what 401 of the
+  existing nodes use. `View(50)` shows at Medium; `View(1)` is reserved for the handful of
+  core structural nodes (farm, web applications, service collection) that must always be
+  present. **Pick this deliberately**: giving a branch's root node a level higher than the
+  user's view level hides the entire subtree beneath it, with no error.
 
 ## Namespaces
 - Base lib nodes: `namespace SPM2.SharePoint.Model`

@@ -13,7 +13,9 @@ using SPM2.Framework; using SPM2.SharePoint; using SPM2.SharePoint.Model;
 namespace SPM2.SharePointSE.Model
 {
 	[Title(PropertyName="DisplayName")]
-	[Icon(Small = IconsSE.DefaultSmall)][View(70)]
+	// View(10): the certificates themselves are the point of the branch, so they must be
+	// visible at the default Medium view level (50).
+	[Icon(Small = IconsSE.DefaultSmall)][View(10)]
 	[ExportToNode("SPM2.SharePoint.Model.SPFarmNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPWebApplicationNode")]
 	[ExportToNode("SPM2.SharePointSE.Model.SPServerCertificateCollectionNode")]

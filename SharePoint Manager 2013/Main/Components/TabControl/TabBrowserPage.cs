@@ -18,6 +18,13 @@ namespace Keutmann.SharePointManager.Components
                     _browser = new WebBrowser();
                     _browser.Dock = DockStyle.Fill;
                     _browser.AllowNavigation = true;
+
+                    // The hosted WebBrowser runs in IE7 document mode unless the process
+                    // is registered under FEATURE_BROWSER_EMULATION, and modern SharePoint
+                    // pages use ES6, so scripts fail on things like Map being undefined.
+                    // Without this every such failure raises a modal IE script-error
+                    // dialog over the application.
+                    _browser.ScriptErrorsSuppressed = true;
                 }
                 return _browser; 
             }
