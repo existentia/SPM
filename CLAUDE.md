@@ -20,10 +20,16 @@ plain WinExe that references the SSOM assemblies.
   `SPM2.SharePointSE.Model`.
 - Model libraries are just `Model/Generated/*.cs` (auto-generated wrapper "node"
   classes, one per SSOM type) + `Model/Custom/*.cs` (hand-tuned partial-class
-  overrides) + `Icons.cs`. Nodes are discovered at runtime by attributes: generated
-  classes carry `[AdapterItemType("...")]`, custom classes carry
-  `[ExportToNode]`/`[Title]`/`[Icon]`/`[View]`. There is no `[AttachTo]` attribute —
-  `AttachTo` is only the name of the generator's template token.
+  overrides) + `Icons.cs`. Generated classes carry `[AdapterItemType("...")]`; custom
+  classes carry `[Title]`/`[Icon]`/`[View]`/`[ExportToNode]`. There is no `[AttachTo]`
+  attribute — `AttachTo` is only the name of the generator's template token.
+- **Tree placement is driven by `[AdapterItemType]`, not `[ExportToNode]`.**
+  `[AdapterItemType]` registers the node in IoC under the SSOM type name (everything
+  after the first comma is stripped, so the pinned `Version=14.0.0.0` in the generated
+  files is decorative). `SPNodeProvider` then builds children by reflecting over the
+  parent's properties and resolving each property type against those registrations.
+  `[ExportToNode]` is **vestigial from an abandoned MEF design and is never read** —
+  a dangling one is inert, and adding one will not make a node appear.
 - `Tools/SPM2.ClassGenerator` — a console app that GENERATES the model. It reflects
   over the live farm from `SPFarm.Local` and emits one Generated and one Custom file
   per type into `cs/` and `custom/` under the working directory, from

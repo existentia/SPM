@@ -28,12 +28,23 @@ From real examples (`SPFeatureNode`, `SPFileNode`, `SPDistributedCacheServiceNod
 public partial class SPFeatureNode { ... }
 ```
 
-- **`[ExportToNode("<fully-qualified node type name>")]`** is the tree-hierarchy mechanism
-  (the `[#AttachTo#]` token in the generator template). Multiple allowed → the node appears
-  under several parents. **These are STRING references — the compiler does not check them.**
-  If you rename/move a node type or delete a parent, matching `ExportToNode` strings break
-  **silently** (the node just stops appearing). Grep for the type name whenever you rename
-  or delete a node.
+- **`[ExportToNode("<fully-qualified node type name>")]`** (the `[#AttachTo#]` token in the
+  generator template) is **vestigial — nothing reads it.** It survives from an abandoned
+  MEF composition design: `ExportToNodeAttribute` still has its `: ExportAttribute` base
+  commented out, and the `SPNodeProvider.GetChildrenTypes` method that once consumed it is
+  commented out too. Treat these attributes as documentation of intent only.
+
+  **The real hierarchy mechanism is `[AdapterItemType]` plus reflection.**
+  `SPNodeProvider.LoadUnorderedChildren` walks `TypeDescriptor.GetProperties(...)` on the
+  parent's SSOM type and, for each property, resolves a node by looking up the *property
+  type's* full name against the IoC registrations that `[AdapterItemType]` creates.
+  `LoadCollectionChildren` does the same using each item's runtime type. So a node appears
+  wherever the SSOM exposes a property (or collection item) of its type — the tree mirrors
+  the object model, and is not declared anywhere.
+
+  Practical consequence: a wrong or dangling `ExportToNode` string is inert, and adding one
+  will *not* make a node appear. To change where something shows up you have to change the
+  node's `[AdapterItemType]`, or override `LoadChildren` on the parent.
 - **`[Title]`**: `[Title("X")]` = literal; `[Title(PropertyName="Y")]` = read property Y.
   If property Y is renamed in v16, update the string.
 - **`[Icon(Small=...)]`**: `"BULLET.GIF"` is treated as "no custom icon" by the base class.
