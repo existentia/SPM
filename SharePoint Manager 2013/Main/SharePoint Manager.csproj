@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug 2013</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug SE</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -37,30 +37,6 @@
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug 2010|AnyCPU' ">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug 2010\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <DocumentationFile>
-    </DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <DefineConstants>
-    </DefineConstants>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\SharePoint Manager 2010\</OutputPath>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <ErrorReport>prompt</ErrorReport>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU'">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <DebugSymbols>true</DebugSymbols>
@@ -81,14 +57,36 @@
     <ErrorReport>prompt</ErrorReport>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
-  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2010|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-    <AssemblyName>SharePoint Manager 2010</AssemblyName>
-  </PropertyGroup>-->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug SE\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SPSE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ErrorReport>prompt</ErrorReport>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <OutputPath>bin\SharePoint Manager SE\</OutputPath>
+    <DefineConstants>TRACE;SPSE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
   <PropertyGroup>
-    <AssemblyName>SharePoint Manager 2010</AssemblyName>
+    <AssemblyName>SharePoint Manager</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU'">
     <AssemblyName>SharePoint Manager 2013</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <AssemblyName>SharePoint Manager SE</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\SPM2.Framework\SPM2.Framework.csproj">
@@ -98,6 +96,19 @@
     <ProjectReference Include="..\..\Libraries\SPM2.SharePoint\SPM2.SharePoint2010.csproj">
       <Project>{ce144460-64ce-4fb5-a25e-25b7bb028d16}</Project>
       <Name>SPM2.SharePoint2010</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- The version-delta model assembly is discovered at runtime by AutoLoadAssemblies
+       scanning the exe directory, so it must be copied to the output. The 2010/2013
+       configurations relied on this being done by hand; SE wires it up properly. -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <ProjectReference Include="..\..\Libraries\SPM2.SharePoint2013\SPM2.SharePoint2013.csproj">
+      <Project>{48e7192b-2165-4561-b9b0-9a1bdb492893}</Project>
+      <Name>SPM2.SharePoint2013</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\SPM2.SharePointSE\SPM2.SharePointSE.csproj">
+      <Project>{459c8a6c-ca0f-4a42-bd01-3c62bde01a96}</Project>
+      <Name>SPM2.SharePointSE</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -113,8 +124,35 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
-    <Reference Include="System.ComponentModel.Composition" Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU'" />
+    <Reference Include="System.ComponentModel.Composition" Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'" />
     <Reference Include="Microsoft.SharePoint" />
+    <None Include="app.config.SE" />
+  </ItemGroup>
+  <!-- SharePoint registers its ISAPI folder in AssemblyFoldersEx, so this reference
+       resolves there rather than from the GAC and defaults to CopyLocal=true, dragging
+       ~30 SSOM assemblies (and their dependencies) into the output. On a SharePoint
+       server they must bind from the GAC instead. -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <Reference Update="Microsoft.SharePoint">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <!-- Microsoft Edge (WebView2) for the browser tab. SE only: these are net462
+       assemblies and the 2013 configurations still target v4.0. WebView2Loader.dll is
+       the native x64 loader and must sit beside the executable. -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <Reference Include="Microsoft.Web.WebView2.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\Microsoft.Web.WebView2-1.0.4078.44\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\Microsoft.Web.WebView2-1.0.4078.44\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <None Include="..\..\Libraries\Microsoft.Web.WebView2-1.0.4078.44\win-x64\WebView2Loader.dll">
+      <Link>WebView2Loader.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\ChangedNodes.cs" />
@@ -423,12 +461,15 @@
     <Folder Include="Functions\EventHandler\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild" Condition="'$(Configuration)|$(Platform)' == 'Debug 2010|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-    <Delete Files="$(TargetDir)$(TargetFileName).config" />
-    <Copy SourceFiles="$(ProjectDir)app.config.2010" DestinationFiles="$(TargetDir)$(TargetFileName).config" />
-  </Target>
   <Target Name="AfterBuild" Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU'">
     <Delete Files="$(TargetDir)$(TargetFileName).config" />
     <Copy SourceFiles="$(ProjectDir)app.config.2013" DestinationFiles="$(TargetDir)$(TargetFileName).config" />
+  </Target>
+  <!-- Deliberately NOT named "AfterBuild": MSBuild keeps only the last target of a
+       given name, so a third AfterBuild here would silently disable the 2013 one
+       above. (That override is also why the 2010 target above never runs.) -->
+  <Target Name="CopySEAppConfig" AfterTargets="Build" Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <Delete Files="$(TargetDir)$(TargetFileName).config" />
+    <Copy SourceFiles="$(ProjectDir)app.config.SE" DestinationFiles="$(TargetDir)$(TargetFileName).config" />
   </Target>
 </Project>

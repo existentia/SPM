@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug SE</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{459C8A6C-CA0F-4A42-BD01-3C62BDE01A96}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SPM2.SharePointSE</RootNamespace>
+    <AssemblyName>SPM2.SharePointSE</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug SE\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SPSE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <OutputPath>bin\Release SE\</OutputPath>
+    <DefineConstants>TRACE;SPSE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>SPM2.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <!-- Private=False: the SSOM binds from the GAC on a SharePoint server. -->
+  <ItemGroup>
+    <Reference Include="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Icons.cs" />
+    <Compile Include="Model\Custom\SPServerCertificateCollectionNode.cs" />
+    <Compile Include="Model\Custom\SPServerCertificateManagementPropertiesNode.cs" />
+    <Compile Include="Model\Custom\SPServerCertificateManagerNode.cs" />
+    <Compile Include="Model\Custom\SPServerCertificateNode.cs" />
+    <Compile Include="Model\Custom\SPServerCertificateStoreNode.cs" />
+    <Compile Include="Model\Custom\SPServerEndEntityCertificateStoreNode.cs" />
+    <Compile Include="Model\Custom\SPServerIntermediateCertificateStoreNode.cs" />
+    <Compile Include="Model\Custom\SPServerPendingCertificateStoreNode.cs" />
+    <Compile Include="Model\Custom\SPServerRootCertificateStoreNode.cs" />
+    <Compile Include="Model\Generated\SPServerCertificateCollectionNode.cs" />
+    <Compile Include="Model\Generated\SPServerCertificateManagementPropertiesNode.cs" />
+    <Compile Include="Model\Generated\SPServerCertificateManagerNode.cs" />
+    <Compile Include="Model\Generated\SPServerCertificateNode.cs" />
+    <Compile Include="Model\Generated\SPServerCertificateStoreNode.cs" />
+    <Compile Include="Model\Generated\SPServerEndEntityCertificateStoreNode.cs" />
+    <Compile Include="Model\Generated\SPServerIntermediateCertificateStoreNode.cs" />
+    <Compile Include="Model\Generated\SPServerPendingCertificateStoreNode.cs" />
+    <Compile Include="Model\Generated\SPServerRootCertificateStoreNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SPM2.Framework\SPM2.Framework.csproj">
+      <Project>{5de0d29f-de15-4e15-9e89-3a873d849c40}</Project>
+      <Name>SPM2.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SPM2.SharePoint\SPM2.SharePoint2010.csproj">
+      <Project>{ce144460-64ce-4fb5-a25e-25b7bb028d16}</Project>
+      <Name>SPM2.SharePoint2010</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SPM2.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

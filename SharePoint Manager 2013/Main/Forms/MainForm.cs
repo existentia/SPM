@@ -172,8 +172,22 @@ namespace Keutmann.SharePointManager.Forms
         {
             SetLanguage(SPMLocalization.C_CULTURE_EN);
 
-            this.MainMenuStrip = IoCContainer.Resolve<MainMenuStrip>();
-            this.Controls.Add(this.MainMenuStrip);
+            // Do NOT add the IoC-composed MainMenuStrip here. InitializeComponent has
+            // already added the designer menu strip, so adding this one produced two
+            // stacked menu bars. The designer menu is the more complete of the two: the
+            // IoC View menu has nothing bound to it and its Language menu binding is
+            // commented out, while the designer menu has Open Database, Cancel, Export,
+            // the view modes and four languages.
+            //
+            // Settings is the one item that exists only on the IoC side, so graft it
+            // onto the designer Edit menu rather than losing it. Guarded because this
+            // runs on the Load event.
+            if (!editToolStripMenuItem.DropDownItems.OfType<ToolStripItem>()
+                    .Any(i => i is Components.Menu.Edit.SettingsMenuItem))
+            {
+                editToolStripMenuItem.DropDownItems.Add(
+                    IoCContainer.Resolve<Components.Menu.Edit.SettingsMenuItem>());
+            }
 
             var statusStrip = IoCContainer.Resolve<MainWindowStatusStrip>();
             this.Controls.Add(statusStrip);

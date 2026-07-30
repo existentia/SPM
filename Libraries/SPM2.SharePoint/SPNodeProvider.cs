@@ -70,6 +70,12 @@ namespace SPM2.SharePoint
             int count = 0;
             
  
+            // Enumerating an SSOM collection hits the content database and can fail for
+            // reasons that are not faults - most commonly access denied on a site the
+            // account cannot read. Degrade to whatever was gathered rather than letting it
+            // escape into the TreeView's WndProc.
+            try
+            {
             if (parentNode.Pointer == null)
             {
                 parentNode.ClearChildren();
@@ -98,10 +104,18 @@ namespace SPM2.SharePoint
                 }
                 
                 parentNode.LoadingChildren = parentNode.Pointer.MoveNext();
-                
+
                 count++;
                 parentNode.TotalCount++;
 
+            }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine("LoadCollectionChildren failed on " + parentNode.GetType().Name + ": " + ex.Message);
+                parentNode.LoadingChildren = false;
+                parentNode.State = "Gray";
+                parentNode.ToolTipText = ex.Message;
             }
 
             if (parentNode.TotalCount <= batchCount)

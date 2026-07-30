@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug SE</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -23,26 +23,6 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>SPM2.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug 2010|AnyCPU' ">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug 2010\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <DefineConstants>
-    </DefineConstants>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release 2010\</OutputPath>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU'">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <DebugSymbols>true</DebugSymbols>
@@ -61,18 +41,45 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2010|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-    <Reference Include="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug SE\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SPSE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <OutputPath>bin\Release SE\</OutputPath>
+    <DefineConstants>TRACE;SPSE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <!-- Private=False: SPM runs on a SharePoint server, so the SSOM assemblies must be
+       loaded from the GAC, not from private copies. It also keeps the output folder
+       free of SSOM DLLs, which matters because AutoLoadAssemblies LoadFile()s and
+       reflects over every assembly sitting next to the exe. -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <Reference Include="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\14\ISAPI\Microsoft.SharePoint.dll</HintPath>
+      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Common Files\microsoft shared\Web Server Extensions\14\ISAPI\Microsoft.SharePoint.Client.ServerRuntime.dll</HintPath>
+      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Client.ServerRuntime.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SharePoint.Search, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SharePoint.Search, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Common Files\microsoft shared\Web Server Extensions\14\ISAPI\Microsoft.SharePoint.Search.dll</HintPath>
+      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files\Common Files\microsoft shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.Search.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU'">
@@ -95,7 +102,7 @@
       <HintPath>..\Autofac-2.6.3.862-NET35\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU'" />
+    <Reference Include="System.ComponentModel.Composition" Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
@@ -113,6 +120,7 @@
     <Compile Include="Library\SPMRegistry.cs" />
     <Compile Include="Library\SPMVersion.cs" />
     <Compile Include="Model\AdapterItemTypeAttribute.cs" />
+    <Compile Include="Model\SharedTypes.cs" />
     <Compile Include="Model\Custom\SPIisSettingsCollectionNode.cs" />
     <Compile Include="Model\Custom\SPListItemCollectionModel.cs" />
     <Compile Include="Model\Custom\SPViewFieldNode.cs" />
@@ -149,9 +157,6 @@
     <Compile Include="Rules\RecursiveRule.cs" />
     <Compile Include="Rules\ViewRule.cs" />
     <Compile Include="SharePointContext.cs" />
-    <Compile Include="Model\Custom\AccessServerWebServiceInstanceNode.cs" />
-    <Compile Include="Model\Custom\AccessServerWebServiceNode.cs" />
-    <Compile Include="Model\Custom\AccessServerWebServiceProxyNode.cs" />
     <Compile Include="Model\Custom\ApplicationRegistryServiceDatabaseNode.cs" />
     <Compile Include="Model\Custom\ApplicationRegistryServiceInstanceNode.cs" />
     <Compile Include="Model\Custom\ApplicationRegistryServiceNode.cs" />
@@ -162,16 +167,9 @@
     <Compile Include="Model\Custom\BdcServiceInstanceNode.cs" />
     <Compile Include="Model\Custom\BdcServiceNode.cs" />
     <Compile Include="Model\Custom\BdcServiceProxyNode.cs" />
-    <Compile Include="Model\Custom\BIMonitoringServiceDatabaseNode.cs" />
-    <Compile Include="Model\Custom\BIMonitoringServiceInstanceNode.cs" />
-    <Compile Include="Model\Custom\BIMonitoringServiceNode.cs" />
-    <Compile Include="Model\Custom\BIMonitoringServiceProxyNode.cs" />
     <Compile Include="Model\Custom\DataConnectionFileCollectionNode.cs" />
     <Compile Include="Model\Custom\DataConnectionFileNode.cs" />
     <Compile Include="Model\Custom\DiagnosticsServiceNode.cs" />
-    <Compile Include="Model\Custom\ExcelServerWebServiceInstanceNode.cs" />
-    <Compile Include="Model\Custom\ExcelServerWebServiceNode.cs" />
-    <Compile Include="Model\Custom\ExcelServerWebServiceProxyNode.cs" />
     <Compile Include="Model\Custom\ExemptUserAgentCollectionNode.cs" />
     <Compile Include="Model\Custom\ExemptUserAgentNode.cs" />
     <Compile Include="Model\Custom\FormsServiceNode.cs" />
@@ -206,7 +204,6 @@
     <Compile Include="Model\Custom\SearchAdminWebServiceNode.cs" />
     <Compile Include="Model\Custom\SearchDataAccessServiceInstanceNode.cs" />
     <Compile Include="Model\Custom\SearchGathererDatabaseNode.cs" />
-    <Compile Include="Model\Custom\SearchPropertyStoreDatabaseNode.cs" />
     <Compile Include="Model\Custom\SearchQueryAndSiteSettingsServiceInstanceNode.cs" />
     <Compile Include="Model\Custom\SearchQueryAndSiteSettingsServiceNode.cs" />
     <Compile Include="Model\Custom\SearchQueryAndSiteSettingsServiceProxyNode.cs" />
@@ -546,19 +543,9 @@
     <Compile Include="Model\Custom\VisioGraphicsServiceInstanceNode.cs" />
     <Compile Include="Model\Custom\VisioGraphicsServiceNode.cs" />
     <Compile Include="Model\Custom\VisioGraphicsServiceProxyNode.cs" />
-    <Compile Include="Model\Custom\WebAnalyticsServiceInstanceNode.cs" />
-    <Compile Include="Model\Custom\WebAnalyticsServiceNode.cs" />
-    <Compile Include="Model\Custom\WebAnalyticsServiceProxyNode.cs" />
-    <Compile Include="Model\Custom\WebAnalyticsStagerDatabaseNode.cs" />
-    <Compile Include="Model\Custom\WebAnalyticsWarehouseDatabaseNode.cs" />
-    <Compile Include="Model\Custom\WebAnalyticsWebServiceInstanceNode.cs" />
-    <Compile Include="Model\Custom\WebAnalyticsWebServiceNode.cs" />
     <Compile Include="Model\Custom\WordServiceInstanceNode.cs" />
     <Compile Include="Model\Custom\WordServiceNode.cs" />
     <Compile Include="Model\Custom\WordServiceProxyNode.cs" />
-    <Compile Include="Model\Generated\AccessServerWebServiceInstanceNode.cs" />
-    <Compile Include="Model\Generated\AccessServerWebServiceNode.cs" />
-    <Compile Include="Model\Generated\AccessServerWebServiceProxyNode.cs" />
     <Compile Include="Model\Generated\ApplicationRegistryServiceDatabaseNode.cs" />
     <Compile Include="Model\Generated\ApplicationRegistryServiceInstanceNode.cs" />
     <Compile Include="Model\Generated\ApplicationRegistryServiceNode.cs" />
@@ -569,16 +556,9 @@
     <Compile Include="Model\Generated\BdcServiceInstanceNode.cs" />
     <Compile Include="Model\Generated\BdcServiceNode.cs" />
     <Compile Include="Model\Generated\BdcServiceProxyNode.cs" />
-    <Compile Include="Model\Generated\BIMonitoringServiceDatabaseNode.cs" />
-    <Compile Include="Model\Generated\BIMonitoringServiceInstanceNode.cs" />
-    <Compile Include="Model\Generated\BIMonitoringServiceNode.cs" />
-    <Compile Include="Model\Generated\BIMonitoringServiceProxyNode.cs" />
     <Compile Include="Model\Generated\DataConnectionFileCollectionNode.cs" />
     <Compile Include="Model\Generated\DataConnectionFileNode.cs" />
     <Compile Include="Model\Generated\DiagnosticsServiceNode.cs" />
-    <Compile Include="Model\Generated\ExcelServerWebServiceInstanceNode.cs" />
-    <Compile Include="Model\Generated\ExcelServerWebServiceNode.cs" />
-    <Compile Include="Model\Generated\ExcelServerWebServiceProxyNode.cs" />
     <Compile Include="Model\Generated\ExemptUserAgentCollectionNode.cs" />
     <Compile Include="Model\Generated\ExemptUserAgentNode.cs" />
     <Compile Include="Model\Generated\FormsServiceNode.cs" />
@@ -613,7 +593,6 @@
     <Compile Include="Model\Generated\SearchAdminWebServiceNode.cs" />
     <Compile Include="Model\Generated\SearchDataAccessServiceInstanceNode.cs" />
     <Compile Include="Model\Generated\SearchGathererDatabaseNode.cs" />
-    <Compile Include="Model\Generated\SearchPropertyStoreDatabaseNode.cs" />
     <Compile Include="Model\Generated\SearchQueryAndSiteSettingsServiceInstanceNode.cs" />
     <Compile Include="Model\Generated\SearchQueryAndSiteSettingsServiceNode.cs" />
     <Compile Include="Model\Generated\SearchQueryAndSiteSettingsServiceProxyNode.cs" />
@@ -924,13 +903,6 @@
     <Compile Include="Model\Generated\VisioGraphicsServiceInstanceNode.cs" />
     <Compile Include="Model\Generated\VisioGraphicsServiceNode.cs" />
     <Compile Include="Model\Generated\VisioGraphicsServiceProxyNode.cs" />
-    <Compile Include="Model\Generated\WebAnalyticsServiceInstanceNode.cs" />
-    <Compile Include="Model\Generated\WebAnalyticsServiceNode.cs" />
-    <Compile Include="Model\Generated\WebAnalyticsServiceProxyNode.cs" />
-    <Compile Include="Model\Generated\WebAnalyticsStagerDatabaseNode.cs" />
-    <Compile Include="Model\Generated\WebAnalyticsWarehouseDatabaseNode.cs" />
-    <Compile Include="Model\Generated\WebAnalyticsWebServiceInstanceNode.cs" />
-    <Compile Include="Model\Generated\WebAnalyticsWebServiceNode.cs" />
     <Compile Include="Model\Generated\WordServiceInstanceNode.cs" />
     <Compile Include="Model\Generated\WordServiceNode.cs" />
     <Compile Include="Model\Generated\WordServiceProxyNode.cs" />
@@ -979,10 +951,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MEF35\ComponentModel\MEF35.csproj" Condition="'$(Configuration)|$(Platform)' == 'Release 2010|AnyCPU'">
-      <Project>{1BBA5101-D4F0-48B8-A5D6-7B23A099DCE3}</Project>
-      <Name>MEF35</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SPM2.Framework\SPM2.Framework.csproj">
       <Project>{5de0d29f-de15-4e15-9e89-3a873d849c40}</Project>
       <Name>SPM2.Framework</Name>

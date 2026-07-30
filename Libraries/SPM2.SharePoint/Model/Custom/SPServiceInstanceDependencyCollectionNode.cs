@@ -1,4 +1,4 @@
-/* ---------------------------
+﻿/* ---------------------------
  * SharePoint Manager 2010 v2
  * Created by Carsten Keutmann
  * ---------------------------
@@ -26,7 +26,6 @@ namespace SPM2.SharePoint.Model
 	[ExportToNode("SPM2.SharePoint.Model.SPWindowsTokenServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPTracingServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPWorkflowTimerServiceNode")]
-	[ExportToNode("SPM2.SharePoint.Model.BIMonitoringServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.ApplicationRegistryServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.OfficeServerServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPUserCodeServiceNode")]
@@ -35,16 +34,12 @@ namespace SPM2.SharePoint.Model
 	[ExportToNode("SPM2.SharePoint.Model.LauncherServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.LoadBalancerServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SearchQueryAndSiteSettingsServiceNode")]
-	[ExportToNode("SPM2.SharePoint.Model.WebAnalyticsWebServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPSecurityTokenServiceNode")]
-	[ExportToNode("SPM2.SharePoint.Model.ExcelServerWebServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPIncomingEmailServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.UserProfileServiceNode")]
-	[ExportToNode("SPM2.SharePoint.Model.AccessServerWebServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPSubscriptionSettingsServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPAdministrationServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.NotesWebServiceNode")]
-	[ExportToNode("SPM2.SharePoint.Model.WebAnalyticsServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.WordServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.SPTopologyWebServiceNode")]
 	[ExportToNode("SPM2.SharePoint.Model.FormsServiceNode")]

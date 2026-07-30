@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SharePoint Manager 2010 v2")]
-[assembly: AssemblyDescription("Next generation of the SharePoint Manager 2010.")]
+[assembly: AssemblyTitle("SPM2.Framework")]
+[assembly: AssemblyDescription("Core framework for SharePoint Manager.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Keutmann ApS")]
-[assembly: AssemblyProduct("SharePoint Manager 2010 v2")]
+[assembly: AssemblyProduct("SharePoint Manager")]
 [assembly: AssemblyCopyright("Copyright © 2010 - Carsten Keutmann")]
 [assembly: AssemblyTrademark("Keutmann ApS")]
 [assembly: AssemblyCulture("")]

@@ -38,7 +38,9 @@ namespace Keutmann.SharePointManager.Forms
             {
                 var text = File.ReadAllText(path);
 
-                textBox1.Text = String.Format(text, SPMEnvironment.Version.Year, SPMEnvironment.Version.Number);
+                // Edition rather than Year: Subscription Edition has no release year,
+                // and the placeholder reads as "SharePoint Manager {0}".
+                textBox1.Text = String.Format(text, SPMEnvironment.Version.Edition, SPMEnvironment.Version.Number);
             }
             this.Text = SPMLocalization.GetString("Interface_About");
         }

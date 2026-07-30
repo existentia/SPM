@@ -60,7 +60,15 @@ namespace Keutmann.SharePointManager
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(ex.Message);
+                // Do not fail silently. This used to Trace and return, so any startup
+                // failure closed the process with no window, no message and no event log
+                // entry - a native DLL sitting beside the executable was enough to do it.
+                Trace.WriteLine(ex.ToString());
+                MessageBox.Show(
+                    ex.Message + Environment.NewLine + Environment.NewLine + ex.StackTrace,
+                    SPMEnvironment.Version.Title + " - startup failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
             finally
             {

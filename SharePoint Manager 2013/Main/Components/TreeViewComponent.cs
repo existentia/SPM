@@ -192,6 +192,19 @@ namespace Keutmann.SharePointManager.Components
 
                 worker.Invoke();
             }
+            catch (Exception ex)
+            {
+                // This runs inside the TreeView's expand notification, so anything that
+                // escapes here surfaces as an unhandled exception and terminates the
+                // application. Browsing a farm hits objects the account may not be able to
+                // read, which is expected, so report and carry on.
+                Trace.WriteLine("Tree operation failed: " + ex);
+                MessageBox.Show(
+                    ex.Message,
+                    "Could not load this branch",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
             finally
             {
                 EndUpdate();

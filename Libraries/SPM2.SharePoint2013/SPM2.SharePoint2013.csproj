@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug SE</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{48E7192B-2165-4561-B9B0-9A1BDB492893}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -34,6 +34,33 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug SE\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SPSE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <OutputPath>bin\Release SE\</OutputPath>
+    <DefineConstants>TRACE;SPSE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'">
+    <Reference Include="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\ISAPI\Microsoft.SharePoint.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
@@ -48,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU'" />
+    <Reference Include="System.ComponentModel.Composition" Condition="'$(Configuration)|$(Platform)' == 'Debug 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Debug SE|AnyCPU' Or '$(Configuration)|$(Platform)' == 'Release SE|AnyCPU'" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,20 +84,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Custom\AccessServicesMonitorUsageProviderNode.cs" />
-    <Compile Include="Model\Custom\AccessServicesWebServiceInstanceNode.cs" />
-    <Compile Include="Model\Custom\AccessServicesWebServiceNode.cs" />
-    <Compile Include="Model\Custom\AccessServicesWebServiceProxyNode.cs" />
-    <Compile Include="Model\Custom\AppDatabaseUsageProviderNode.cs" />
     <Compile Include="Model\Custom\AppManagementServiceDatabaseNode.cs" />
     <Compile Include="Model\Custom\AppManagementServiceInstanceNode.cs" />
     <Compile Include="Model\Custom\AppManagementServiceNode.cs" />
     <Compile Include="Model\Custom\AppManagementServiceProxyNode.cs" />
-    <Compile Include="Model\Custom\EduUsageDefinitionNode.cs" />
     <Compile Include="Model\Custom\PowerPointConversionServiceInstanceNode.cs" />
     <Compile Include="Model\Custom\PowerPointConversionServiceNode.cs" />
     <Compile Include="Model\Custom\PowerPointConversionServiceProxyNode.cs" />
-    <Compile Include="Model\Custom\ResponseTimeUsageProviderNode.cs" />
     <Compile Include="Model\Custom\SearchAnalyticsReportingDatabaseNode.cs" />
     <Compile Include="Model\Custom\SearchLinksDatabaseNode.cs" />
     <Compile Include="Model\Custom\SearchRuntimeServiceInstanceNode.cs" />
@@ -152,20 +172,13 @@
     <Compile Include="Model\Custom\WorkManagementServiceNode.cs" />
     <Compile Include="Model\Custom\WorkManagementServiceProxyNode.cs" />
     <Compile Include="Model\Custom\WSSSyncUsageDefinitionNode.cs" />
-    <Compile Include="Model\Generated\AccessServicesMonitorUsageProviderNode.cs" />
-    <Compile Include="Model\Generated\AccessServicesWebServiceInstanceNode.cs" />
-    <Compile Include="Model\Generated\AccessServicesWebServiceNode.cs" />
-    <Compile Include="Model\Generated\AccessServicesWebServiceProxyNode.cs" />
-    <Compile Include="Model\Generated\AppDatabaseUsageProviderNode.cs" />
     <Compile Include="Model\Generated\AppManagementServiceDatabaseNode.cs" />
     <Compile Include="Model\Generated\AppManagementServiceInstanceNode.cs" />
     <Compile Include="Model\Generated\AppManagementServiceNode.cs" />
     <Compile Include="Model\Generated\AppManagementServiceProxyNode.cs" />
-    <Compile Include="Model\Generated\EduUsageDefinitionNode.cs" />
     <Compile Include="Model\Generated\PowerPointConversionServiceInstanceNode.cs" />
     <Compile Include="Model\Generated\PowerPointConversionServiceNode.cs" />
     <Compile Include="Model\Generated\PowerPointConversionServiceProxyNode.cs" />
-    <Compile Include="Model\Generated\ResponseTimeUsageProviderNode.cs" />
     <Compile Include="Model\Generated\SearchAnalyticsReportingDatabaseNode.cs" />
     <Compile Include="Model\Generated\SearchLinksDatabaseNode.cs" />
     <Compile Include="Model\Generated\SearchRuntimeServiceInstanceNode.cs" />
