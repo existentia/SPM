@@ -12,6 +12,25 @@ namespace SPM2.ClassGenerator
 
         public bool Add(NodeDescriptor descriptor, NodeDescriptor parent)
         {
+            // Compiler-generated types cannot be represented as node classes. Reject
+            // them before linking to the parent: otherwise UpdateAttachTo still emits
+            // an [ExportToNode] naming a node that can never be written, leaving a
+            // dangling reference the compiler cannot catch. That is how the existing
+            // model ended up with "<get_Products>d__0Node".
+            if (descriptor.IsCompilerGenerated)
+            {
+                return false;
+            }
+
+            // Generic types are named like "KeyValuePair`2". The backtick is legal in a
+            // filename but not in a C# identifier, so the emitted class would not
+            // compile. Closed generics that are worth showing (for example
+            // Dictionary<SPUrlZone, SPIisSettings>) are hand-written nodes instead.
+            if (descriptor.IsGeneric)
+            {
+                return false;
+            }
+
             if (parent != null)
             {
                 parent.Children.Add(descriptor);

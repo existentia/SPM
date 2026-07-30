@@ -12,7 +12,10 @@ namespace SPM2.ClassGenerator
 {
     public class ReplacementParameters
     {
-        public const string AttachToTemplate = "[AttachTo(\"{0}\")]";
+        // The model's tree-hierarchy attribute is ExportToNodeAttribute. No AttachTo
+        // attribute exists, so the stubs this generator used to emit did not compile.
+        // The token in CustomNode.template is still called [#AttachTo#].
+        public const string AttachToTemplate = "[ExportToNode(\"{0}\")]";
         public const string TitleTemplate = "[Title(\"{0}\")]";
         public const string TitlePropertyNameTemplate = "[Title(PropertyName=\"{0}\")]";
         public const string IconTemplate = "[Icon(Small=\"{0}\")]";

@@ -166,6 +166,27 @@ namespace SPM2.ClassGenerator
 
 
 
+        private bool? _isCompilerGenerated = null;
+        /// <summary>
+        /// True for compiler-generated types such as iterator state machines
+        /// (&lt;get_Products&gt;d__0) and closure classes (&lt;&gt;c). These are reached by
+        /// reflecting over iterator properties like SPFarm.Products. Their names are
+        /// legal in IL but not as a C# identifier or a Windows filename.
+        /// </summary>
+        public bool IsCompilerGenerated
+        {
+            get
+            {
+                if (_isCompilerGenerated == null)
+                {
+                    string name = this.ObjectType.Name;
+                    _isCompilerGenerated = name.IndexOf('<') >= 0 || name.IndexOf('>') >= 0;
+                }
+                return (bool)_isCompilerGenerated;
+            }
+            set { _isCompilerGenerated = value; }
+        }
+
         private bool? _isSPPersistedObjectType = null;
         public bool IsSPPersistedObjectType
         {
